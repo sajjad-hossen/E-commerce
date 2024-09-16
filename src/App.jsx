@@ -4,6 +4,7 @@ import Home from "./pages/Home";
 import Header from "./components/Header";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
+//import AuthContextProvider from "./contexts/Auth";
 
 const App = () => {
   return (
