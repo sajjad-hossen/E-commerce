@@ -11,6 +11,7 @@ import ProductAddForm from "../pages/ProductAddForm";
 import Users from "../pages/Users";
 import Products from "../pages/Products";
 import Cart from "../pages/Cart";
+import ProductDetails from "../pages/ProductDetails";
 
 const App = () => {
   return (
@@ -25,9 +26,9 @@ const App = () => {
         <Route path='/order-list' element={<OrderList />} />
         <Route path='/admin/product-form' element={<ProductAddForm />} />
         <Route path='/admin/users' element={<Users />} />
-        <Route path='/admin/product-edit-form/:id' element={<Signup />} />
         <Route path='/products' element={<Products />} />
         <Route path='/cart' element={<Cart />} />
+        <Route path='/products/:id' element={<ProductDetails />} />
       </Routes>
     </Router>
   );

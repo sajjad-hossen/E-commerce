@@ -1,6 +1,8 @@
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getAllProducts } from "../services/product";
+import ProductCard from "../components/ProductCard";
+import ProductDetails from "./ProductDetails";
 
 const Home = () => {
   const { data, isLoading, isError, error } = useQuery({
@@ -16,20 +18,49 @@ const Home = () => {
     return <div>Error: {error.message || "An error occurred"}</div>; // Return the error state
   }
 
+  // Check if data is in the correct format
+  const products = Array.isArray(data) ? data : data?.data;
+
   return (
     <div className='min-h-screen bg-gray-100'>
       {/* Header Section */}
-      <header className='bg-gradient-to-r from-blue-500 to-indigo-600 text-white py-12 min-h-[300px] flex flex-col justify-center'>
-        <div className='container mx-auto px-4'>
-          <h1 className='text-4xl font-bold tracking-wide text-center mb-4'>
-            Welcome to Our E-Commerce Site
+      <header className='relative overflow-hidden bg-gradient-to-r from-green-400 via-blue-500 to-purple-600 text-white py-16'>
+        <div className='absolute inset-0 -z-10'>
+          <svg
+            className='w-full h-full'
+            viewBox='0 0 1460 160'
+            fill='none'
+            xmlns='http://www.w3.org/2000/svg'
+          >
+            <path
+              d='M-760 68C-760 68 5 108 646 108C1287 108 1584 -4 1590 69L1598 0L1600 160L-760 160V68Z'
+              fill='url(#paint0_linear)'
+            />
+            <defs>
+              <linearGradient id='paint0_linear' x1='0' x2='1' y1='1' y2='0'>
+                <stop stopColor='#34D399' />
+                <stop offset='1' stopColor='#9333EA' />
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+        <div className='container mx-auto px-4 relative z-10'>
+          <h1 className='text-5xl font-extrabold leading-tight text-center mb-4'>
+            Discover Amazing Products
           </h1>
-          <p className='text-center text-xl'>
-            Find the best products at the most affordable prices.
+          <p className='text-center text-xl mb-8'>
+            Explore our curated collection of top-quality items at unbeatable
+            prices.
           </p>
+          <div className='flex justify-center'>
+            <input
+              type='text'
+              placeholder='Search for products...'
+              className='w-full max-w-md px-4 py-2 rounded-lg border border-gray-300 shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500'
+            />
+          </div>
         </div>
       </header>
-
       {/* Products Section */}
       <section className='py-12'>
         <div className='container mx-auto px-4'>
@@ -42,15 +73,16 @@ const Home = () => {
             </p>
           </div>
 
-          <ul>
-            {data?.data.map((item) => (
-              <li key={item.id} className='mb-4 p-4 border rounded'>
-                <h3 className='text-xl font-semibold'>{item.name}</h3>
-                <p className='text-gray-700'>{item.description}</p>
-                <p className='text-gray-500'>EAN: {item.ean}</p>
-                <p className='text-gray-500'>UPC: {item.upc}</p>
-              </li>
-            ))}
+          <ul className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
+            {products?.length ? (
+              products.map((item) => (
+                <li key={item.id}>
+                  <ProductCard product={item} />
+                </li>
+              ))
+            ) : (
+              <p>No products available</p>
+            )}
           </ul>
         </div>
       </section>
