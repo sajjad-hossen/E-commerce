@@ -10,8 +10,6 @@ const Signup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // Basic client-side validation
     const email = emailInputRef.current.value;
     const username = userNameInputRef.current.value;
     const password = passwordInputRef.current.value;
@@ -40,8 +38,6 @@ const Signup = () => {
       }
 
       const data = await response.json();
-
-      // Check the response for success
       if (data) {
         navigate("/login");
       }
