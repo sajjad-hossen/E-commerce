@@ -1,14 +1,17 @@
-import React from "react";
+import { useContext } from "react";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { getProductById } from "../services/product";
+import { ADD_TO_CART } from "../actions/cart";
+import { CartContext } from "../contexts/cart";
 
 const ProductDetails = () => {
+  const { dispatchCartAction } = useContext(CartContext);
   const { id } = useParams();
 
-  // Adjusted useQuery to use an object with `queryKey` and `queryFn`
+  // Adjusted useQuery to use an object with queryKey and queryFn
   const { data, error, isLoading } = useQuery({
-    queryKey: ["products", id],
+    queryKey: ["product", id],
     queryFn: () => getProductById(id),
   });
 
@@ -45,7 +48,15 @@ const ProductDetails = () => {
                 </p>
               </div>
               <div className='mt-4'>
-                <button className='bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-lg shadow-md transition-transform transform hover:scale-105'>
+                <button
+                  onClick={() => {
+                    dispatchCartAction({
+                      type: ADD_TO_CART,
+                      payload: data,
+                    });
+                  }}
+                  className='bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-lg shadow-md transition-transform transform hover:scale-105'
+                >
                   Add to Cart
                 </button>
               </div>

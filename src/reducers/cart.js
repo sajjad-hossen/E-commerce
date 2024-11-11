@@ -1,8 +1,8 @@
 import {
   ADD_TO_CART,
-  CLEAR_CART,
-  MODIFY_QUANTITY_OF_A_ITEM,
   REMOVE_ITEM_FROM_CART,
+  MODIFY_QUANTITY_OF_A_ITEM,
+  CLEAR_CART,
 } from "../actions/cart";
 
 export const cartReducer = (state = [], action) => {
@@ -18,9 +18,12 @@ export const cartReducer = (state = [], action) => {
           })
         : [...state, { ...action.payload, quantity: 1 }];
     }
+
     case REMOVE_ITEM_FROM_CART: {
-      return state.filter((item) => item.id !== action.payload.id);
+      // This correctly filters out the item to remove from the state
+      return state.filter((item) => item.id !== action.payload);
     }
+
     case MODIFY_QUANTITY_OF_A_ITEM: {
       return state.map((item) => {
         if (item.id === action.payload.id) {
@@ -29,9 +32,11 @@ export const cartReducer = (state = [], action) => {
         return item;
       });
     }
+
     case CLEAR_CART: {
       return [];
     }
+
     default: {
       return state;
     }

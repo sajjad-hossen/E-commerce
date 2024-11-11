@@ -37,18 +37,16 @@ const Header = () => {
               </Link>
             </li>
             {/* Conditional rendering for admin/super-admin */}
-            {authCtx.isUserLoggedIn &&
-              (authCtx?.user?.special_users === "super-admin" ||
-                authCtx?.user?.special_users === "admin") && (
-                <li>
-                  <Link
-                    to='/products'
-                    className='hover:bg-gray-700 px-4 py-2 rounded transition duration-300'
-                  >
-                    Products
-                  </Link>
-                </li>
-              )}
+            {authCtx.isUserLoggedIn && (
+              <li>
+                <Link
+                  to='/products'
+                  className='hover:bg-gray-700 px-4 py-2 rounded transition duration-300'
+                >
+                  Products
+                </Link>
+              </li>
+            )}
             {authCtx.isUserLoggedIn &&
               (authCtx?.user?.special_users === "super-admin" ||
                 authCtx?.user?.special_users === "admin") && (

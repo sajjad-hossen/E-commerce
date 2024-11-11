@@ -1,7 +1,9 @@
-import React from "react";
+import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
-
+import { CartContext } from "../contexts/cart";
+import { ADD_TO_CART } from "../actions/cart";
 function ProductCard({ product }) {
+  const { dispatchCartAction } = useContext(CartContext);
   const navigate = useNavigate();
 
   return (
@@ -20,8 +22,18 @@ function ProductCard({ product }) {
         </h2>
         <p className='text-indigo-600 font-bold mt-2'>${product.price}</p>
       </div>
-      <button className='mt-4 bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg transition-colors duration-300 ease-in-out'>
-        Click here about Details
+      <button
+        onClick={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          dispatchCartAction({
+            type: ADD_TO_CART,
+            payload: product,
+          });
+        }}
+        className='mt-4 bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg transition-colors duration-300 ease-in-out'
+      >
+        ADD to Cart
       </button>
     </div>
   );

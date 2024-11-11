@@ -1,13 +1,13 @@
-import cross from "./icon/cross.svg";
-import plus from "./icon/plus.svg";
-import minus from "./icon/minus.svg";
-import edit from "./icon/edit-icon.svg";
+import crossItem from "./icons/cross.svg";
+import plus from "./icons/plus.svg";
+import minus from "./icons/minus.svg";
+import editIcon from "./icons/edit-icon.svg";
 
 const icons = {
-  cross,
+  crossItem,
   plus,
   minus,
-  edit,
+  editIcon,
 };
 
 export { icons };

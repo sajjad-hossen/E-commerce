@@ -6,6 +6,7 @@ import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import Cart from "./pages/Cart";
 import ProductDetails from "./pages/ProductDetails";
+import Products from "./pages/Products";
 //import AuthContextProvider from "./contexts/Auth";
 
 const App = () => {
@@ -17,6 +18,7 @@ const App = () => {
         <Route path='/signup' element={<Signup />} />
         <Route path='/login' element={<Login />} />
         <Route path='/cart' element={<Cart />} />
+        <Route path='/products' element={<Products />} />
         <Route path='/products/:id' element={<ProductDetails />} />
       </Routes>
     </Router>
