@@ -49,14 +49,6 @@ const App = () => {
           }
         />
         <Route
-          path='/admin/product-form'
-          element={
-            <PrivateAdminRoute>
-              <ProductAddForm />
-            </PrivateAdminRoute>
-          }
-        />
-        <Route
           path='/admin/users'
           element={
             <PrivateAdminRoute>
@@ -72,6 +64,15 @@ const App = () => {
             </PrivateAdminRoute>
           }
         />
+        <Route
+          path='/admin/product-add-form'
+          element={
+            <PrivateAdminRoute>
+              <ProductAddForm />
+            </PrivateAdminRoute>
+          }
+        />
+
         <Route path='/products/:id' element={<ProductDetails />} />
         <Route path='/cart' element={<Cart />} />
         <Route

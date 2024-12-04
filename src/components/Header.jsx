@@ -89,18 +89,16 @@ const Header = () => {
                   </Link>
                 </li>
               )}
-            {authCtx.isUserLoggedIn &&
-              (authCtx?.user?.special_users === "super-admin" ||
-                authCtx?.user?.special_users === "admin") && (
-                <li>
-                  <Link
-                    to='/admin/product-add-form'
-                    className='hover:bg-gray-700 px-4 py-2 rounded transition duration-300'
-                  >
-                    Add Product
-                  </Link>
-                </li>
-              )}
+            {authCtx.isUserLoggedIn && (
+              <li>
+                <Link
+                  to='/admin/product-add-form'
+                  className='hover:bg-gray-700 px-4 py-2 rounded transition duration-300'
+                >
+                  Add Product
+                </Link>
+              </li>
+            )}
             {/* Conditionally render Signup and Login links if user is not logged in */}
             {!authCtx.isUserLoggedIn && (
               <>

@@ -7,6 +7,7 @@ import Login from "./pages/Login";
 import Cart from "./pages/Cart";
 import ProductDetails from "./pages/ProductDetails";
 import Products from "./pages/Products";
+import ProductAddForm from "./pages/ProductAddForm";
 //import AuthContextProvider from "./contexts/Auth";
 
 const App = () => {
@@ -20,6 +21,7 @@ const App = () => {
         <Route path='/cart' element={<Cart />} />
         <Route path='/products' element={<Products />} />
         <Route path='/products/:id' element={<ProductDetails />} />
+        <Route path='/admin/product-add-form' element={<ProductAddForm />} />
       </Routes>
     </Router>
   );
