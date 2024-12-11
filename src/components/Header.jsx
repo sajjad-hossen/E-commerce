@@ -47,18 +47,16 @@ const Header = () => {
                 </Link>
               </li>
             )}
-            {authCtx.isUserLoggedIn &&
-              (authCtx?.user?.special_users === "super-admin" ||
-                authCtx?.user?.special_users === "admin") && (
-                <li>
-                  <Link
-                    to='/users'
-                    className='hover:bg-gray-700 px-4 py-2 rounded transition duration-300'
-                  >
-                    Users
-                  </Link>
-                </li>
-              )}
+            {authCtx.isUserLoggedIn && (
+              <li>
+                <Link
+                  to='/admin/users'
+                  className='hover:bg-gray-700 px-4 py-2 rounded transition duration-300'
+                >
+                  Users
+                </Link>
+              </li>
+            )}
             <li>
               <Link
                 to='/cart'
