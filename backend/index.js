@@ -4,6 +4,7 @@ require("dotenv").config();
 const bodyParser = require("body-parser");
 const connectDB = require("./utils/db");
 const userRouter = require("./routes/userRoutes");
+const productRouter = require("./routes/productRoutes");
 
 const app = express();
 const port = process.env.PORT || 9001;
@@ -24,6 +25,7 @@ app.get("/", (req, res) => {
 
 // all controller route
 app.use("/api/user", userRouter);
+app.use("/api/product", productRouter);
 
 app.listen(port, () => {
   console.log(`Your Port is running http://localahost:${port}`);

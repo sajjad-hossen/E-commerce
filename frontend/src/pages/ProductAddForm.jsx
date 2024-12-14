@@ -1,26 +1,13 @@
 import { useState } from "react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createProduct } from "../services/product";
-import Header from "../components/Header";
 
 const ProductAddForm = () => {
+  const [res, setRes] = useState("");
   const [product, setProduct] = useState({
     title: "",
     price: "",
     description: "",
-    image: null,
-  });
-
-  const queryClient = useQueryClient();
-
-  const createProductMutation = useMutation({
-    mutationFn: (formData) => createProduct(formData),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["products"] }); // Refresh product list
-    },
-    onError: (error) => {
-      console.error("Failed to create product:", error);
-    },
+    image: "",
+    category: "",
   });
 
   const handleChange = (e) => {
@@ -28,19 +15,29 @@ const ProductAddForm = () => {
     setProduct({ ...product, [name]: value });
   };
 
-  const handleImage = (e) => {
-    setProduct({ ...product, image: e.target.files[0] });
-  };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const formData = new FormData();
-    formData.append("title", product.title);
-    formData.append("price", product.price);
-    formData.append("description", product.description);
-    formData.append("image", product.image);
 
-    createProductMutation.mutate(formData);
+    const response = await fetch(
+      "http://localhost:9000/api/product/add-product",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          data: {
+            title: product.title,
+            price: product.price,
+            description: product.description,
+            imageUrl: product.image,
+            category: product.category,
+          },
+        }),
+      }
+    );
+    const productData = await response.json();
+    setRes(productData?.message);
   };
 
   return (
@@ -111,21 +108,44 @@ const ProductAddForm = () => {
           ></textarea>
         </div>
 
+        {/* description  */}
+
+        <div className='mb-4'>
+          <label
+            className='block text-gray-700 text-sm font-bold mb-2'
+            htmlFor='ctg'
+          >
+            Product Category
+          </label>
+          <input
+            id='ctg'
+            name='category'
+            type='text'
+            placeholder='Enter product category'
+            value={product.category}
+            onChange={handleChange}
+            required
+            className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+          />
+        </div>
+
         {/* Image */}
-        <div className='mb-6'>
+        <div className='mb-4'>
           <label
             className='block text-gray-700 text-sm font-bold mb-2'
             htmlFor='image'
           >
-            Product Image
+            Product Image Url Link
           </label>
           <input
             id='image'
             name='image'
-            type='file'
-            onChange={handleImage}
+            type='text'
+            placeholder='Enter product Image Url link'
+            value={product.image}
+            onChange={handleChange}
             required
-            className='block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100'
+            className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
           />
         </div>
 
@@ -137,6 +157,9 @@ const ProductAddForm = () => {
           >
             Add Product
           </button>
+        </div>
+        <div className='text-center mt-1'>
+          {res?.length > 0 && <p className='text-green-400 '>{res}</p>}
         </div>
       </form>
     </div>

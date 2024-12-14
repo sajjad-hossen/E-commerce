@@ -1,25 +1,26 @@
-import React from "react";
-import { useQuery } from "@tanstack/react-query";
-import { getAllProducts } from "../services/product";
+import React, { useEffect, useState } from "react";
+
 import ProductCard from "../components/ProductCard";
-import ProductDetails from "./ProductDetails";
 
 const Home = () => {
-  const { data, isLoading, isError, error } = useQuery({
-    queryKey: ["products"],
-    queryFn: getAllProducts,
-  });
+  const [product, setProduct] = useState();
 
-  if (isLoading) {
-    return <div>Loading.....</div>; // Return the loading state
-  }
-
-  if (isError) {
-    return <div>Error: {error.message || "An error occurred"}</div>; // Return the error state
-  }
-
-  // Check if data is in the correct format
-  const products = Array.isArray(data) ? data : data?.data;
+  useEffect(() => {
+    const getProduct = async () => {
+      const response = await fetch(
+        "http://localhost:9000/api/product/get-product",
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const productData = await response.json();
+      setProduct(productData?.product);
+    };
+    getProduct();
+  }, []);
 
   return (
     <div className='min-h-screen bg-gray-100'>
@@ -74,9 +75,9 @@ const Home = () => {
           </div>
 
           <ul className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
-            {products?.length ? (
-              products.map((item) => (
-                <li key={item.id}>
+            {product?.length ? (
+              product.map((item) => (
+                <li key={item._id}>
                   <ProductCard product={item} />
                 </li>
               ))

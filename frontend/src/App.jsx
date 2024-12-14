@@ -10,6 +10,7 @@ import Products from "./pages/Products";
 import ProductAddForm from "./pages/ProductAddForm";
 //import Users from "./pages/Users";
 import Users from "./pages/Users";
+import ProductEditForm from "./pages/ProductEditForm";
 //import AuthContextProvider from "./contexts/Auth";
 
 const App = () => {
@@ -25,6 +26,10 @@ const App = () => {
         <Route path='/products/:id' element={<ProductDetails />} />
         <Route path='/admin/product-add-form' element={<ProductAddForm />} />
         <Route path='/admin/users' element={<Users />} />
+        <Route
+          path='/admin/product-edit-form/:id'
+          element={<ProductEditForm />}
+        />
       </Routes>
     </Router>
   );

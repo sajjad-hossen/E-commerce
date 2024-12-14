@@ -1,12 +1,25 @@
-import { useQuery } from "@tanstack/react-query";
-import { getAllProducts } from "../services/product";
 import ProductRow from "./../components/ProductRow";
+import { useEffect, useState } from "react";
 
 const Products = () => {
-  const { data } = useQuery({
-    queryKey: ["products"],
-    queryFn: getAllProducts,
-  });
+  const [product, setProduct] = useState();
+
+  useEffect(() => {
+    const getProduct = async () => {
+      const response = await fetch(
+        "http://localhost:9000/api/product/get-product",
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const productData = await response.json();
+      setProduct(productData?.product);
+    };
+    getProduct();
+  }, []);
 
   return (
     <section className='min-h-screen bg-gradient-to-b from-gray-100 to-gray-200 p-8'>
@@ -28,8 +41,10 @@ const Products = () => {
               </tr>
             </thead>
             <tbody>
-              {data?.length > 0 &&
-                data.map((item) => <ProductRow key={item.id} item={item} />)}
+              {product?.length > 0 &&
+                product.map((item) => (
+                  <ProductRow key={item._id} product={item} />
+                ))}
             </tbody>
           </table>
         </div>
