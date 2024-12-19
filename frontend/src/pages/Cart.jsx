@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { CartContext } from "./../contexts/cart";
 import CartItem from "../components/CartItem";
@@ -6,11 +6,17 @@ import { CLEAR_CART } from "../actions/cart";
 import { AuthContext } from "./../contexts/Auth";
 
 const Cart = () => {
+  const [cartProduct, setCartProduct] = useState([]);
   const authContext = useContext(AuthContext);
   const { cart, dispatchCartAction } = useContext(CartContext);
   const navigate = useNavigate(); // Correct usage of useNavigate hook
   let totalAmount = 0;
   cart.forEach((item) => (totalAmount += item.price * item.quantity));
+
+  useEffect(() => {
+    setCartProduct([JSON.parse(localStorage.getItem("product"))]);
+  }, []);
+  console.log(cartProduct);
 
   return (
     <div className='container mx-auto p-6'>

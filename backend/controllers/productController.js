@@ -63,6 +63,36 @@ class productController {
       return;
     }
   });
+
+  // single product
+
+  static getSingleProduct = asyncHandler(async (req, res) => {
+    const id = req.query.id || {};
+    console.log(id);
+    try {
+      const singleProduct = await productModel.findOne({ _id: id });
+      if (singleProduct) {
+        res.status(200).json({
+          status: true,
+          message: "success",
+          data: singleProduct,
+        });
+        return;
+      } else {
+        res.status(400).json({
+          status: false,
+          message: "Can not find any product.",
+        });
+        return;
+      }
+    } catch (error) {
+      res.status(400).json({
+        status: false,
+        message: "Error Server.",
+      });
+      return;
+    }
+  });
   static removeProduct = asyncHandler(async (req, res) => {
     const id = req.body.data || {};
     if (id) {
